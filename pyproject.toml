@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "llm_store"
-version = "0.1.2"
+version = "0.1.6"
 description = "LLM Gateway Service"
 authors = ["shenyubao <shenyubao@yucekj.com>"]
 readme = "README.md"

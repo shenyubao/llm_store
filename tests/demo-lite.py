@@ -1,7 +1,7 @@
-import os
-
 from llm_store.gateway import LLMGateway
 from llm_store.store.baserowstore import BaseRowStore
+import os
+
 
 if __name__ == "__main__":
     store = BaseRowStore(
