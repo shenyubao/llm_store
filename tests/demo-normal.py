@@ -12,11 +12,14 @@ if __name__ == "__main__":
         chat_log_table_code="309")
 
     llm_gateway = LLMGateway(store)
+    prompt_code = "test_template"
+
+    # -- 获取 AI 模型
+    llm_model = llm_gateway.get_model(prompt_code)
 
     # -- 渲染 Prompt
-    prompt_code = "test_template"
-    model_record, prompt_record, messages = llm_gateway.render_prompt(prompt_code, {"topic": "科幻"})
+    messages = llm_gateway.render_prompt(prompt_code, {"topic": "科幻"})
 
-    # -- 对话
-    chatCompletion = llm_gateway.completions(model_record, messages)
+    # -- 执行对话
+    chatCompletion = llm_gateway.completions(llm_model, messages, trace_id="1234567890")
     print(chatCompletion)

@@ -12,14 +12,14 @@ if __name__ == "__main__":
         prompt_table_code="308",
         chat_log_table_code="309")
     llm_gateway = LLMGateway(store)
+    prompt_code = "system_blank"
 
-    # 不使用远程 Prompt 模式
-    messages = [{"role": "system", "content": "今天星期几"}]
+    # -- 获取 AI 模型
+    llm_model = llm_gateway.get_model(prompt_code)
 
-    # -- 获取 模型信息
-    model_code = "litellm-us"
-    model_record = llm_gateway.get_model(model_code)
+    # -- 渲染 Prompt
+    messages = llm_gateway.render_prompt(prompt_code, {"content": "你是谁"})
 
     # -- 执行对话
-    chatCompletion = llm_gateway.completions(model_record, messages, trace_id="1234567890")
+    chatCompletion = llm_gateway.completions(llm_model, messages, trace_id="1234567890")
     print(chatCompletion)

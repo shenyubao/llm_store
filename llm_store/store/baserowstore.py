@@ -13,22 +13,26 @@ class BaseRowStore(BaseStore):
 
         self.client = Client(api_key=api_key, base_url=api_host)
 
-    def get_model(self, code: str) -> ModelRecord:
-        filters = {"filter_type":"AND","filters":[{"type":"equal","field":"code","value":code}],"groups":[]}
-        model_data = self.client.base(int(self.db_code)).table(self.model_table_code).rows(filters=filters)
-        assert len(model_data) == 1 
-        model_data = model_data[0]
-        
+    def get_model(self, prompt_code: str) -> ModelRecord:
+        filters = {"filter_type":"AND","filters":[{"type":"equal","field":"code","value":prompt_code}],"groups":[]}
+        prompt_datas = self.client.base(int(self.db_code)).table(self.prompt_table_code).rows(filters=filters)
+        assert len(prompt_datas) == 1
+        prompt_data = prompt_datas[0]
+
+        api_style = prompt_data.api_style[0]['value']['value']
+        api_base = prompt_data.api_base[0]['value']
+        api_key = prompt_data.api_key[0]['value']
+        model_name = prompt_data.model_name[0]['value']
+        model_config = prompt_data.model_config[0]['value']
+
         rtn = ModelRecord(
-                api_base=model_data.api_base,
-                api_key=model_data.api_key,
-                code=model_data.code,
-                model_name=model_data.model_name,
-                api_style=model_data.api_style,
-                config=model_data.config)
-        
-        # 下拉框处理
-        rtn.api_style = rtn.api_style['value']
+                api_base=api_base,
+                api_key=api_key,
+                code=prompt_data.code,
+                model_name=model_name,
+                api_style=api_style,
+                config=model_config)
+
         return rtn
    
    

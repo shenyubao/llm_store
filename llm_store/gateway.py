@@ -3,7 +3,7 @@ from openai.types.chat import ChatCompletion
 from llm_store.store.basestore import BaseStore, PromptRecord, ModelRecord
 from llm_store.store.baserowstore import BaseRowStore
 import time
-from jinja2 import Template, Environment
+from jinja2 import Environment
 
 
 class LLMGateway:
@@ -70,7 +70,7 @@ class LLMGateway:
 
             messages.append({"role": "user", "content": render_user_prompt})
 
-        return prompt.model, prompt, messages
+        return messages
 
     def save_log(self, messages, model: ModelRecord,chatCompletion: ChatCompletion,time_cost:float, traceid: str, prompt_record_id: int = None):
         content_str = "----".join(message['content'] for message in messages)

@@ -17,6 +17,9 @@ class ModelRecord:
         self.api_style = api_style
         self.config = config
 
+    def __str__(self):
+        return f'{self.api_base}:{self.api_key}:{self.model_name}:{self.api_style}'
+
 # 提示词对象
 class PromptRecord:
     code: str
